@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./Login.css"
 
 const Login = () => { 
     const [ username, setUsername] = useState('');
@@ -9,7 +10,8 @@ const Login = () => {
     };
 
     return (
-    <form onSubmit={handleSubmit}>
+    <div className='login-container'>
+    <form className='form-container' onSubmit={handleSubmit}>
       <label>
         Username:
         <input
@@ -30,6 +32,7 @@ const Login = () => {
       <br />
       <button type="submit">Login</button>
     </form>
+    </div>
     );
 }
 
