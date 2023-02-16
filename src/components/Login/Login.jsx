@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { login } from "../../services/login";
 import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let response = await login(username, password);
+      const response = await login(username, password);
       console.log(response);
+      navigate('/landing')
     } catch (error) {
       console.error(error);
     }

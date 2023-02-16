@@ -4,7 +4,9 @@ async function login(email, password) {
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  return respuesta.json();
+  let json = respuesta.json();
+  localStorage.setItem('token', json);
+  return json
 }
 
 export { login };
