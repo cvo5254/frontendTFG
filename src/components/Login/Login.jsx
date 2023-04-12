@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { login } from "../../services/login";
 import "./Login.css";
 
@@ -12,10 +12,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await login(username, password);
-      console.log(response);
-      navigate('/landing')
+      if (response.status === 200) {
+        navigate("/landing");
+      } else {
+        console.error("Error en la respuesta del servidor:", response.error);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error de red al hacer la petición:", error);
     }
   };
 
