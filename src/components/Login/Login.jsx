@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/login";
 import "./Login.css";
+import Modal from "../Modal/Modal";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,11 +19,16 @@ const Login = () => {
       if (response.status === 200) {
         navigate("/landing");
       } else {
-        console.error("Error en la respuesta del servidor:", response.error);
+        setError(response.error);
+        setShowModal(true);
       }
     } catch (error) {
       console.error("Error de red al hacer la petición:", error);
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -50,6 +59,7 @@ const Login = () => {
           Login
         </button>
       </form>
+      <Modal isOpen={showModal} onClose={handleCloseModal} message={error} />
     </div>
   );
 };
