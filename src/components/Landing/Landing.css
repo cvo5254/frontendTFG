@@ -1,0 +1,84 @@
+.Landing.Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background-color: #8b0000; /* Cambio de color de fondo */
+    color: #fff;
+  }
+  
+  .Landing.Container h1 {
+    font-size: 6rem;
+    text-align: center;
+  }
+  
+  .Menu {
+    display: flex;
+    justify-content: space-around;
+    border-top: 2px solid #8b0000; /* Cambio de color de borde */
+    border-bottom: 2px solid #8b0000; /* Cambio de color de borde */
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+  }
+  
+  .Menu li {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 33.33%;
+  }
+  
+  .Menu button {
+    background-color: #8b0000; /* Cambio de color de fondo */
+    color: #fff;
+    border: none;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  .Menu button:hover {
+    background-color: #b30000; /* Cambio de color de fondo al pasar el mouse */
+  }
+  
+  .SubMenu {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #8b0000; /* Cambio de color de fondo */
+    color: #fff;
+  }
+  
+  .SubMenu li {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .SubMenu button {
+    background-color: #8b0000; /* Cambio de color de fondo */
+    color: #fff;
+    border: none;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  .SubMenu button:hover {
+    background-color: #b30000; /* Cambio de color de fondo al pasar el mouse */
+  }
+  
+  .Menu li:hover .SubMenu {
+    display: block;
+  }
+  

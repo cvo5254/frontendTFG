@@ -16,9 +16,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await login(username, password);
-      if (response.status === 200) {
+      console.log(response.statusText);
+      if (response && response.status === 200) {
         navigate("/landing");
-      } else {
+      } else if (response && response.status === 400) {
         setError(response.error);
         setShowModal(true);
       }
