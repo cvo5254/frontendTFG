@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Landing.css";
 
 const Landing = () => {
+  const navigate = useNavigate();
   const activateUsers = () => {
-    // Lógica para activar usuarios registrados
+    navigate("/users");
   };
 
   return (
