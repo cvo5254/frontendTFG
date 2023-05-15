@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
-const Table = ({ data, columns }) => {
+const Table = ({ data, columns, updateFlag }) => {
   const [rows, setRows] = useState(data);
+
+  useEffect(() => {
+    setRows(data);
+  }, [data, updateFlag]);
 
   const renderCell = (params) => {
     const { field, value } = params;
