@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Table from "../Table/Table";
+import PublishForm from "./PublishForm/PublishForm";
 
 const Publish = () => {
   const [emergencies, setEmergencies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateFlag, setUpdateFlag] = useState(false);
+  const [showPublishForm, setShowPublishForm] = useState(false);
+  const [selectedEmergencyId, setSelectedEmergencyId] = useState("");
+  const [selectedChannelId, setSelectedChannelId] = useState("");
 
   const getEmergencies = async () => {
     try {
@@ -13,30 +17,27 @@ const Publish = () => {
         "http://localhost:8000/api/allemergencies/?is_published=False"
       );
       const data = await response.json();
-      const emergencies = data.map((emergency) => {
-        const descripcion = emergency.description ? emergency.description : "";
-        const canal = emergency.channel ? emergency.channel.nombre : "";
-
-        return {
-          id: emergency.id,
-          Titulo: emergency.title,
-          Decripcion: descripcion,
-          Canal: canal,
-          Estado: emergency.is_published,
-          Acciones: (
-            <>
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() => handlePublish(emergency.id)}
-              >
-                Activar
-              </Button>
-            </>
-          ),
-        };
-      });
+      const emergencies = data.map((emergency) => ({
+        id: emergency.id,
+        Titulo: emergency.title,
+        Decripcion: emergency.description,
+        Canal: emergency.channel?.nombre || "",
+        Estado: emergency.is_published,
+        Acciones: (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() =>
+                handlePublishClick(emergency.id, emergency.channel?.id)
+              }
+            >
+              Activar
+            </Button>
+          </>
+        ),
+      }));
       setEmergencies(emergencies);
       console.log(emergencies);
       setLoading(false);
@@ -47,28 +48,23 @@ const Publish = () => {
 
   useEffect(() => {
     getEmergencies();
-  }, [updateFlag]); // Se ejecuta solo una vez al inicializar el componente
+  }, [updateFlag]);
 
-  const handlePublish = async (emergencyId) => {
-    try {
-      // Realizar la petición PUT para activar el usuario
-      await fetch(`http://localhost:8000/api/${emergencyId}/publish`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      // Volver a realizar la solicitud para obtener los usuarios actualizados
-      setUpdateFlag(!updateFlag);
-      console.log("Publicar la emergencia con ID:", emergencyId);
-    } catch (error) {
-      console.error(error);
-    }
+  const handlePublishClick = (emergencyId, channelId) => {
+    setSelectedEmergencyId(emergencyId);
+    setSelectedChannelId(channelId);
+    setShowPublishForm(true);
   };
 
-  const handleDelete = (id) => {
-    // Lógica para eliminar usuario con el ID `id`
-    console.log("Eliminar usuario con el ID:", id);
+  const handlePublishFormAccept = () => {
+    // Lógica para manejar la acción de aceptar en PublishForm
+    setShowPublishForm(false);
+    setUpdateFlag(!updateFlag);
+  };
+
+  const handlePublishFormCancel = () => {
+    // Lógica para manejar la acción de cancelar en PublishForm
+    setShowPublishForm(false);
   };
 
   if (loading) {
@@ -86,6 +82,14 @@ const Publish = () => {
 
   return (
     <div>
+      {showPublishForm && (
+        <PublishForm
+          emergencyId={selectedEmergencyId}
+          channelId={selectedChannelId}
+          onAccept={handlePublishFormAccept}
+          onCancel={handlePublishFormCancel}
+        />
+      )}
       <Table data={emergencies} columns={columns} updateFlag={updateFlag} />
     </div>
   );

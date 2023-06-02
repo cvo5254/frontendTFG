@@ -1,0 +1,45 @@
+.publish-form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 40px;
+    border: 1px solid #8b0000;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .publish-form-container h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #8b0000;
+  }
+  
+  .publish-form-container label {
+    display: block;
+    margin-bottom: 10px;
+    color: #8b0000;
+  }
+  
+  .publish-form-container select,
+  .publish-form-container button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #8b0000;
+    border-radius: 5px;
+  }
+  
+  .publish-form-container button {
+    background-color: #8b0000;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .publish-form-container button:hover {
+    background-color: #b22222;
+  }
+  
