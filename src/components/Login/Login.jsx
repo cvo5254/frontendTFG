@@ -1,26 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../services/login";
 import "./Login.css";
 import Modal from "../Modal/Modal";
+import { UserContext } from "../../UserContext";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
-
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(username, password);
-      console.log(response.statusText);
-      if (response && response.status === 200) {
+      const respuesta = await fetch("http://localhost:8000/api/login/", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await respuesta.json();
+      const gestor = await data.gestor;
+      console.log(gestor);
+      if (respuesta && respuesta.status === 200) {
+        setUser(gestor);
         navigate("/landing");
-      } else if (response && response.status === 400) {
-        setError(response.error);
+      } else if (respuesta && respuesta.status === 400) {
+        setError(respuesta.error);
         setShowModal(true);
       }
     } catch (error) {
@@ -41,7 +48,7 @@ const Login = () => {
           <input
             className="username-input"
             type="text"
-            value={username}
+            value={email}
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
