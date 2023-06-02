@@ -3,6 +3,7 @@ import { UserProvider } from "./UserContext";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
+import Publish from "./components/Emergencies/Publish";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/publish" element={<Publish />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

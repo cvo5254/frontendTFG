@@ -8,6 +8,10 @@ const Landing = () => {
     navigate("/users");
   };
 
+  const publishEmergencies = () => {
+    navigate("/publish");
+  };
+
   return (
     <div>
       <div className="Landing Container">
@@ -15,7 +19,16 @@ const Landing = () => {
       </div>
       <ul className="Menu">
         <li>
-          <button>Emergencias</button>
+          <div>
+            <button>Emergencias</button>
+            <ul className="SubMenu">
+              <li>
+                <button onClick={publishEmergencies}>
+                  Publicar emergencias informadas
+                </button>
+              </li>
+            </ul>
+          </div>
         </li>
         <li>
           <button>Canales</button>
