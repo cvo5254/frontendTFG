@@ -1,17 +1,53 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./PublishForm.css";
 
-const PublishForm = ({ emergencyId, channelId }) => {
-  const [selectedOption, setSelectedOption] = useState("");
+const PublishForm = ({ emergencyId, channelId, onAccept, onCancel }) => {
+  const [selectedOption, setSelectedOption] = useState(channelId || "");
+  const [channels, setChannels] = useState([]);
 
-  const handleAccept = () => {
-    // Lógica para manejar la acción de aceptar
+  const handleAccept = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/${emergencyId}/publish`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            channel_id: selectedOption,
+          }),
+        }
+      );
+      console.log(response);
+      onAccept();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
-    // Lógica para manejar la acción de cancelar
+    onCancel();
   };
+
+  useEffect(() => {
+    const getChannels = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/getChannels/");
+        const data = await response.json();
+        setChannels(data);
+
+        if (channelId) {
+          setSelectedOption(channelId.toString());
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getChannels();
+  }, []);
 
   return (
     <div className="publish-form-container">
@@ -23,8 +59,11 @@ const PublishForm = ({ emergencyId, channelId }) => {
         onChange={(e) => setSelectedOption(e.target.value)}
       >
         <option value="">Select Channel</option>
-        {/* Renderizar opciones de canal si channelId está disponible */}
-        {channelId && <option value={channelId}>Channel {channelId}</option>}
+        {channels.map((channel) => (
+          <option key={channel.id} value={channel.id}>
+            {channel.nombre}
+          </option>
+        ))}
       </select>
       <button onClick={handleAccept}>Accept</button>
       <button onClick={handleCancel}>Cancel</button>
