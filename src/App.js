@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
 import Publish from "./components/Emergencies/Publish";
 import UsersAdmin from "./components/Users/UsersAdmin";
+import ChannelsAdmin from "./components/Channels/ChannelsAdmin";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/usersAdmin" element={<UsersAdmin />} />
+          <Route path="/channelsAdmin" element={<ChannelsAdmin />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

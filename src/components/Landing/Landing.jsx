@@ -18,6 +18,10 @@ const Landing = () => {
     navigate("/usersAdmin");
   };
 
+  const channelsAdmin = () => {
+    navigate("/channelsAdmin");
+  };
+
   return (
     <div>
       <div className="Landing Container">
@@ -46,7 +50,7 @@ const Landing = () => {
           <ul className="SubMenu">
             {user.es_administrador && (
               <li>
-                <button onClick={usersAdmin}>Gestión de canales</button>
+                <button onClick={channelsAdmin}>Gestión de canales</button>
               </li>
             )}
           </ul>
