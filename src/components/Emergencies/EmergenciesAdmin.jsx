@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Table from "../Table/Table";
-import PublishForm from "./PublishForm/PublishForm";
+import EditEmergencyForm from "./EditEmergencyForm/EditEmergencyForm";
 
-const Publish = () => {
+const EmergenciesAdmin = () => {
   const [emergencies, setEmergencies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateFlag, setUpdateFlag] = useState(false);
@@ -13,9 +13,7 @@ const Publish = () => {
 
   const getEmergencies = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/allemergencies/?is_published=False"
-      );
+      const response = await fetch("http://localhost:8000/api/allemergencies/");
       const data = await response.json();
       const emergencies = data.map((emergency) => ({
         id: emergency.id,
@@ -33,7 +31,15 @@ const Publish = () => {
                 handlePublishClick(emergency.id, emergency.channel?.id)
               }
             >
-              Publicar
+              Editar
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => handleDelete(emergency.id)}
+            >
+              Eliminar
             </Button>
           </>
         ),
@@ -52,6 +58,7 @@ const Publish = () => {
 
   const handlePublishClick = (emergencyId, channelId) => {
     setSelectedEmergencyId(emergencyId);
+    console.log(channelId);
     setSelectedChannelId(channelId);
     setShowPublishForm(true);
   };
@@ -65,6 +72,21 @@ const Publish = () => {
   const handlePublishFormCancel = () => {
     // Lógica para manejar la acción de cancelar en PublishForm
     setShowPublishForm(false);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:8000/api/${id}/deleteEmergency/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setUpdateFlag(!updateFlag);
+      console.log("Eliminar usuario con el ID:", id);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (loading) {
@@ -83,7 +105,7 @@ const Publish = () => {
   return (
     <div>
       {showPublishForm && (
-        <PublishForm
+        <EditEmergencyForm
           emergencyId={selectedEmergencyId}
           channelId={selectedChannelId}
           onAccept={handlePublishFormAccept}
@@ -95,4 +117,4 @@ const Publish = () => {
   );
 };
 
-export default Publish;
+export default EmergenciesAdmin;

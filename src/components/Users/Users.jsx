@@ -27,14 +27,6 @@ const Users = () => {
             >
               Activar
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              onClick={() => handleDelete(user.id)}
-            >
-              Eliminar
-            </Button>
           </>
         ),
       }));
@@ -68,17 +60,12 @@ const Users = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    // Lógica para eliminar usuario con el ID `id`
-    console.log("Eliminar usuario con el ID:", id);
-  };
-
   if (loading) {
     return <p>Loading...</p>;
   }
 
   const columns = [
-    { field: "Id", headerName: "ID", width: 200 },
+    { field: "id", headerName: "ID", width: 200 },
     { field: "Email", headerName: "Email", width: 200 },
     { field: "Estado", headerName: "Estado", width: 200 },
     { field: "Acciones", headerName: "Acciones", width: 200 },
