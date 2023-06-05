@@ -7,6 +7,7 @@ import Publish from "./components/Emergencies/Publish";
 import UsersAdmin from "./components/Users/UsersAdmin";
 import ChannelsAdmin from "./components/Channels/ChannelsAdmin";
 import EmergenciesAdmin from "./components/Emergencies/EmergenciesAdmin";
+import GestorAdmin from "./components/Users/GestorAdmin/GestorAdmin";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/usersAdmin" element={<UsersAdmin />} />
           <Route path="/channelsAdmin" element={<ChannelsAdmin />} />
           <Route path="/emergenciesAdmin" element={<EmergenciesAdmin />} />
+          <Route path="/gestorsAdmin" element={<GestorAdmin />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

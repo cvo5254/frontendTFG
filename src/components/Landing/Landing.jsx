@@ -26,6 +26,10 @@ const Landing = () => {
     navigate("/emergenciesAdmin");
   };
 
+  const gestorsAdmin = () => {
+    navigate("/gestorsAdmin");
+  };
+
   return (
     <div>
       <div className="Landing Container">
@@ -67,7 +71,16 @@ const Landing = () => {
             <ul className="SubMenu">
               {user.es_administrador && (
                 <li>
-                  <button onClick={usersAdmin}>Gestión de usuarios</button>
+                  <button onClick={usersAdmin}>
+                    Gestión de usuarios básicos
+                  </button>
+                </li>
+              )}
+              {user.es_administrador && (
+                <li>
+                  <button onClick={gestorsAdmin}>
+                    Gestión de usuarios gestores
+                  </button>
                 </li>
               )}
               <li>
