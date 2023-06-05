@@ -9,6 +9,7 @@ const GestorAdmin = () => {
   const [updateFlag, setUpdateFlag] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [selectedGestorId, setSelectedGestorId] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
 
   const getGestors = async () => {
     try {
@@ -57,6 +58,12 @@ const GestorAdmin = () => {
     setShowForm(true);
   };
 
+  const handleCreate = () => {
+    setIsCreating(true);
+    setSelectedGestorId("");
+    setShowForm(true);
+  };
+
   const handleFormAccept = () => {
     // Lógica para manejar la acción de aceptar en PublishForm
     setShowForm(false);
@@ -100,11 +107,15 @@ const GestorAdmin = () => {
     <div>
       {showForm && (
         <GestorForm
+          isCreating={isCreating}
           gestorId={selectedGestorId}
           onAccept={handleFormAccept}
           onCancel={handleFormCancel}
         />
       )}
+      <Button variant="contained" color="primary" onClick={handleCreate}>
+        Crear nuevo gestor
+      </Button>
       <Table data={gestors} columns={columns} updateFlag={updateFlag} />
     </div>
   );

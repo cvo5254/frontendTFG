@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./EditForm.css";
 
-const GestorForm = ({ gestorId, onAccept, onCancel }) => {
+const GestorForm = ({ gestorId, isCreating, onAccept, onCancel }) => {
   const [gestor, setGestor] = useState({
     email: "",
     password: "",
     confirmPassword: "",
     telefono: "",
     direccion: "",
+    es_administrador: false,
   });
 
   useEffect(() => {
     const getGestor = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8000/api/${gestorId}/getGestor/`
-        );
-        const data = await response.json();
-        setGestor(data);
+        if (!isCreating) {
+          const response = await fetch(
+            `http://localhost:8000/api/${gestorId}/getGestor/`
+          );
+          const data = await response.json();
+          setGestor(data);
+        }
       } catch (error) {
         console.error(error);
       }
     };
 
     getGestor();
-  }, []);
+  }, [gestorId, isCreating]);
 
   const handleCancel = () => {
     onCancel();
@@ -38,6 +41,14 @@ const GestorForm = ({ gestorId, onAccept, onCancel }) => {
     }));
   };
 
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setGestor((prevGestor) => ({
+      ...prevGestor,
+      [name]: checked,
+    }));
+  };
+
   const handleSubmit = async () => {
     try {
       if (gestor.password !== gestor.confirmPassword) {
@@ -45,21 +56,30 @@ const GestorForm = ({ gestorId, onAccept, onCancel }) => {
         return;
       }
 
+      let url = "";
+      let method = "";
+
+      if (isCreating) {
+        url = "http://localhost:8000/api/create_gestor/";
+        method = "POST";
+      } else {
+        url = `http://localhost:8000/api/${gestorId}/edit_gestor/`;
+        method = "PUT";
+      }
+
       const updatedGestor = {
         ...gestor,
         password: gestor.password !== "" ? gestor.password : undefined,
       };
 
-      const response = await fetch(
-        `http://localhost:8000/api/${gestorId}/edit_gestor/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedGestor),
-        }
-      );
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedGestor),
+      });
+
       console.log(response);
       onAccept();
     } catch (error) {
@@ -79,27 +99,28 @@ const GestorForm = ({ gestorId, onAccept, onCancel }) => {
           onChange={handleChange}
         />
       </div>
-      <div>
-        <label htmlFor="password">Contraseña:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={gestor.password}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="confirmPassword">Confirmar contraseña:</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          value={gestor.confirmPassword}
-          onChange={handleChange}
-        />
-      </div>
-
+      <>
+        <div>
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={gestor.password}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Confirmar contraseña:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={gestor.confirmPassword}
+            onChange={handleChange}
+          />
+        </div>
+      </>
       <div>
         <label htmlFor="direccion">Descripción:</label>
         <input
@@ -111,7 +132,7 @@ const GestorForm = ({ gestorId, onAccept, onCancel }) => {
         />
       </div>
       <div>
-        <label htmlFor="description">Telefono:</label>
+        <label htmlFor="telefono">Telefono:</label>
         <input
           type="text"
           id="telefono"
@@ -120,8 +141,20 @@ const GestorForm = ({ gestorId, onAccept, onCancel }) => {
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Guardar</button>
-      <button onClick={handleCancel}>Cancel</button>
+      {isCreating && (
+        <div>
+          <label htmlFor="esAdministrador">Es Administrador:</label>
+          <input
+            type="checkbox"
+            id="es_administrador"
+            name="es_administrador"
+            checked={gestor.es_administrador}
+            onChange={handleCheckboxChange}
+          />
+        </div>
+      )}
+      <button type="submit">{isCreating ? "Crear" : "Guardar"}</button>
+      <button onClick={handleCancel}>Cancelar</button>
     </form>
   );
 };
