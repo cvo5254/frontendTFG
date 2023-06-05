@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import "./Table.css";
 
 const Table = ({ data, columns, updateFlag }) => {
   const [rows, setRows] = useState(data);
@@ -24,7 +25,7 @@ const Table = ({ data, columns, updateFlag }) => {
   }));
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div className="data-table-container">
       <DataGrid rows={rows} columns={formattedColumns} pageSize={10} />
     </div>
   );

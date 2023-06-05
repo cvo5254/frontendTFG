@@ -1,7 +1,9 @@
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import GestorForm from "./GestorForm/GestorForm";
 import Table from "../../Table/Table";
+import Modal from "react-modal";
+import "./GestorAdmin.css";
 
 const GestorAdmin = () => {
   const [gestors, setGestors] = useState([]);
@@ -10,6 +12,7 @@ const GestorAdmin = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedGestorId, setSelectedGestorId] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
 
   const getGestors = async () => {
     try {
@@ -55,24 +58,24 @@ const GestorAdmin = () => {
 
   const handleEdit = (gestorId) => {
     setSelectedGestorId(gestorId);
-    setShowForm(true);
+    setShowFormModal(true);
   };
 
   const handleCreate = () => {
     setIsCreating(true);
     setSelectedGestorId("");
-    setShowForm(true);
+    setShowFormModal(true);
   };
 
   const handleFormAccept = () => {
     // Lógica para manejar la acción de aceptar en PublishForm
-    setShowForm(false);
+    setShowFormModal(false);
     setUpdateFlag(!updateFlag);
   };
 
   const handleFormCancel = () => {
     // Lógica para manejar la acción de cancelar en PublishForm
-    setShowForm(false);
+    setShowFormModal(false);
   };
 
   const handleDelete = async (id) => {
@@ -104,19 +107,26 @@ const GestorAdmin = () => {
   ];
 
   return (
-    <div>
-      {showForm && (
+    <div className="gestor-admin-container">
+      <button onClick={handleCreate} className="create-button">
+        Crear nuevo gestor
+      </button>
+      <Table data={gestors} columns={columns} updateFlag={updateFlag} />
+
+      <Modal
+        isOpen={showFormModal}
+        onRequestClose={handleFormCancel}
+        contentLabel="Formulario"
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
         <GestorForm
           isCreating={isCreating}
           gestorId={selectedGestorId}
           onAccept={handleFormAccept}
           onCancel={handleFormCancel}
         />
-      )}
-      <Button variant="contained" color="primary" onClick={handleCreate}>
-        Crear nuevo gestor
-      </Button>
-      <Table data={gestors} columns={columns} updateFlag={updateFlag} />
+      </Modal>
     </div>
   );
 };
