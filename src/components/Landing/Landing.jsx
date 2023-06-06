@@ -32,9 +32,6 @@ const Landing = () => {
 
   return (
     <div>
-      <div className="Landing Container">
-        <h1>Nombre de la App</h1>
-      </div>
       <ul className="Menu">
         <li>
           <div>
@@ -92,6 +89,9 @@ const Landing = () => {
           </div>
         </li>
       </ul>
+      <div className="Landing Container">
+        <h1>Nombre de la App</h1>
+      </div>
     </div>
   );
 };

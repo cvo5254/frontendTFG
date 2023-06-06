@@ -88,7 +88,10 @@ const GestorForm = ({ gestorId, isCreating, onAccept, onCancel }) => {
   };
 
   return (
-    <form className="gestor-form-container " onSubmit={handleSubmit}>
+    <form
+      className="gestor-form-container modal-content"
+      onSubmit={handleSubmit}
+    >
       <div>
         <label htmlFor="email">Email:</label>
         <input
