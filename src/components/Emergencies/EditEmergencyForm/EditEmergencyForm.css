@@ -1,3 +1,37 @@
+.modal-edit {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  outline: none;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.modal-edit-content {
+  background-color: white;
+  padding: 40%;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 100%;
+}
+
+
+
+
 .edit-emergency-form-container {
     max-width: 400px;
     margin: 50px auto;

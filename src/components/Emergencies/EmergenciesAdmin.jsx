@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Table from "../Table/Table";
 import EditEmergencyForm from "./EditEmergencyForm/EditEmergencyForm";
+import Modal from "react-modal";
 
 const EmergenciesAdmin = () => {
   const [emergencies, setEmergencies] = useState([]);
@@ -104,14 +105,20 @@ const EmergenciesAdmin = () => {
 
   return (
     <div>
-      {showPublishForm && (
+      <Modal
+        isOpen={showPublishForm}
+        onRequestClose={handlePublishFormCancel}
+        contentLabel="Formulario"
+        className="modal-edit"
+        overlayClassName="modal-edit-overlay"
+      >
         <EditEmergencyForm
           emergencyId={selectedEmergencyId}
           channelId={selectedChannelId}
           onAccept={handlePublishFormAccept}
           onCancel={handlePublishFormCancel}
         />
-      )}
+      </Modal>
       <Table data={emergencies} columns={columns} updateFlag={updateFlag} />
     </div>
   );

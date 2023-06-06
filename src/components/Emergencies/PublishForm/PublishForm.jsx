@@ -50,7 +50,7 @@ const PublishForm = ({ emergencyId, channelId, onAccept, onCancel }) => {
   }, []);
 
   return (
-    <div className="publish-form-container">
+    <div className="publish-form-container modal-publish-content">
       <h2>Publish Form</h2>
       <label htmlFor="channel-dropdown">Select Channel:</label>
       <select

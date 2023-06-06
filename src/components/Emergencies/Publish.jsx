@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Table from "../Table/Table";
 import PublishForm from "./PublishForm/PublishForm";
+import Modal from "react-modal";
 
 const Publish = () => {
   const [emergencies, setEmergencies] = useState([]);
@@ -82,14 +83,21 @@ const Publish = () => {
 
   return (
     <div>
-      {showPublishForm && (
+      <Modal
+        isOpen={showPublishForm}
+        onRequestClose={handlePublishFormCancel}
+        contentLabel="Formulario"
+        className="modal-publish"
+        overlayClassName="modal-publish-overlay"
+      >
         <PublishForm
           emergencyId={selectedEmergencyId}
           channelId={selectedChannelId}
           onAccept={handlePublishFormAccept}
           onCancel={handlePublishFormCancel}
         />
-      )}
+      </Modal>
+
       <Table data={emergencies} columns={columns} updateFlag={updateFlag} />
     </div>
   );

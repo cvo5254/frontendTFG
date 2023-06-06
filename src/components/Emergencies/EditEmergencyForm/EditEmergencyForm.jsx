@@ -81,7 +81,10 @@ const EditEmergencyForm = ({ emergencyId, channelId, onAccept, onCancel }) => {
   };
 
   return (
-    <form className="edit-emergency-form-container " onSubmit={handleSubmit}>
+    <form
+      className="edit-emergency-form-container modal-edit-content"
+      onSubmit={handleSubmit}
+    >
       <div>
         <label htmlFor="title">Título:</label>
         <input
