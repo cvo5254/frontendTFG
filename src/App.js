@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/landing" element={<Landing />} />
-          <Route path="/users" element={<Users />} />
+          <Route path="/activateUsers" element={<Users />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/usersAdmin" element={<UsersAdmin />} />
           <Route path="/channelsAdmin" element={<ChannelsAdmin />} />

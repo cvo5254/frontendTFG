@@ -6,6 +6,7 @@ const Modal = ({ isOpen, onClose, message }) => {
 
   return (
     <div className="modal-container">
+      <div className="modal-overlay" onClick={onClose}></div>
       <div className="modal-content">
         <h3>Error</h3>
         <p>{message}</p>
